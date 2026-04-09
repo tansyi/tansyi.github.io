@@ -1,0 +1,802 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>黄月辉 | 个人主页</title>
+  <style>
+    :root {
+      --bg: #f6f1e8;
+      --paper: #fffdfa;
+      --ink: #241c14;
+      --muted: #625446;
+      --line: rgba(150, 96, 54, 0.22);
+      --accent: #9a4a24;
+      --accent-soft: #f2d6bf;
+      --shadow: 0 12px 34px rgba(60, 31, 10, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Serif SC", "Source Han Serif SC", "STZhongsong", "Microsoft YaHei", serif;
+      line-height: 1.7;
+      background:
+        radial-gradient(circle at 88% 7%, #efd4be 0, rgba(239, 212, 190, 0) 40%),
+        radial-gradient(circle at 0% 40%, #e8dbc8 0, rgba(232, 219, 200, 0) 32%),
+        var(--bg);
+    }
+
+    .texture {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.14;
+      background-image: radial-gradient(rgba(68, 41, 20, 0.28) 0.45px, transparent 0.45px);
+      background-size: 4px 4px;
+    }
+
+    .container {
+      width: min(1060px, 92vw);
+      margin: 0 auto;
+    }
+
+    .page-shell {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 16px;
+      align-items: start;
+      width: min(1320px, 98vw);
+      margin: 0 auto;
+    }
+
+    .side-nav {
+      position: sticky;
+      top: 18px;
+      align-self: start;
+      padding-top: 22px;
+    }
+
+    .side-nav-card {
+      background: linear-gradient(145deg, rgba(255, 253, 249, 0.92), rgba(247, 234, 220, 0.84));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(60, 31, 10, 0.1);
+      padding: 12px;
+    }
+
+    .side-title {
+      margin: 2px 6px 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .content-col {
+      min-width: 0;
+    }
+
+    header {
+      padding: 54px 0 28px;
+      animation: rise 0.85s ease-out both;
+    }
+
+    .hero {
+      background: linear-gradient(145deg, rgba(255, 253, 249, 0.95), rgba(247, 234, 220, 0.88));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 34px 28px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .hero-top {
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .hero-intro {
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-title-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4.2vw, 3rem);
+      letter-spacing: 0.08em;
+    }
+
+    .title-sub {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .quick-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .chip {
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.62);
+      font-size: 0.9rem;
+      color: #4f3f31;
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      border: 1px solid rgba(36, 28, 20, 0.24);
+      border-radius: 999px;
+      overflow: hidden;
+      align-self: center;
+    }
+
+    .lang-btn {
+      border: 0;
+      padding: 7px 14px;
+      font: inherit;
+      background: rgba(255, 255, 255, 0.65);
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    .lang-btn[aria-pressed="true"] {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .hero-photo {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      border-radius: 18px;
+      object-fit: cover;
+      border: 1px solid rgba(154, 74, 36, 0.25);
+      box-shadow: 0 10px 24px rgba(45, 28, 13, 0.16);
+      background: #ead9c7;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    nav a {
+      color: var(--ink);
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid rgba(36, 28, 20, 0.18);
+      padding: 7px 14px;
+      transition: all 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    nav a:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      background: rgba(154, 74, 36, 0.1);
+    }
+
+    section {
+      margin: 22px 0;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(45, 28, 13, 0.08);
+      padding: 24px;
+      animation: rise 0.9s ease both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 36%;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: clamp(1.26rem, 2.7vw, 1.9rem);
+      letter-spacing: 0.04em;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      color: var(--muted);
+    }
+
+    .edu-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+    }
+
+    .edu-box {
+      background: #fff8f1;
+      border: 1px solid rgba(154, 74, 36, 0.2);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .edu-box p {
+      margin: 0;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .timeline-item {
+      border: 1px solid rgba(154, 74, 36, 0.2);
+      border-radius: 15px;
+      padding: 16px;
+      background: #fffefd;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.24s ease, box-shadow 0.24s ease;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, #cf7b4f, #9a4a24);
+    }
+
+    .timeline-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 26px rgba(45, 28, 13, 0.13);
+    }
+
+    .item-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .item-title {
+      margin: 0;
+      font-size: 1.06rem;
+    }
+
+    .item-time {
+      color: var(--muted);
+      font-size: 0.92rem;
+      white-space: nowrap;
+    }
+
+    .item-role {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .item-points {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+
+    .item-points li {
+      margin: 6px 0;
+    }
+
+    .tag-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .tag {
+      background: var(--accent-soft);
+      color: #5c2c12;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 0.88rem;
+      border: 1px solid rgba(154, 74, 36, 0.2);
+    }
+
+    details {
+      border: 1px solid rgba(154, 74, 36, 0.2);
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: #fffcf8;
+      margin-top: 10px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .lang-zh,
+    .lang-en {
+      display: none;
+    }
+
+    body[data-lang="zh"] .lang-zh {
+      display: block;
+    }
+
+    body[data-lang="en"] .lang-en {
+      display: block;
+    }
+
+    .nav-row .lang-zh,
+    .nav-row .lang-en,
+    .inline-lang .lang-zh,
+    .inline-lang .lang-en {
+      display: none;
+    }
+
+    body[data-lang="zh"] .nav-row .lang-zh,
+    body[data-lang="zh"] .inline-lang .lang-zh {
+      display: flex;
+    }
+
+    body[data-lang="en"] .nav-row .lang-en,
+    body[data-lang="en"] .inline-lang .lang-en {
+      display: flex;
+    }
+
+    .side-nav .nav-row .lang-zh,
+    .side-nav .nav-row .lang-en {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .side-nav nav a {
+      display: block;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .inline-lang .lang-zh,
+    .inline-lang .lang-en {
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    footer {
+      text-align: center;
+      color: #5e5143;
+      font-size: 0.92rem;
+      padding: 12px 0 30px;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .side-nav {
+        position: static;
+        padding-top: 8px;
+      }
+
+      .side-nav-card {
+        width: min(1060px, 92vw);
+        margin: 0 auto;
+      }
+
+      .side-nav .nav-row .lang-zh,
+      .side-nav .nav-row .lang-en {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      header {
+        padding-top: 36px;
+      }
+
+      .hero-top {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-photo {
+        width: min(240px, 70vw);
+        margin: 0 auto;
+      }
+
+      .hero {
+        padding: 24px 18px;
+      }
+
+      section {
+        padding: 18px;
+      }
+
+      .edu-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body data-lang="zh">
+  <div class="texture" aria-hidden="true"></div>
+
+  <div class="page-shell">
+    <aside class="side-nav">
+      <div class="side-nav-card">
+        <p class="side-title lang-zh">页面导航</p>
+        <p class="side-title lang-en">Navigation</p>
+        <nav class="nav-row">
+          <div class="lang-zh">
+            <a href="#zh-profile">基本信息</a>
+            <a href="#zh-education">教育背景</a>
+            <a href="#zh-projects">项目经历</a>
+            <a href="#zh-skills">技能信息</a>
+            <a href="#zh-interests">兴趣拓展</a>
+          </div>
+          <div class="lang-en">
+            <a href="#en-profile">Profile</a>
+            <a href="#en-education">Education</a>
+            <a href="#en-projects">Projects</a>
+            <a href="#en-skills">Skills</a>
+            <a href="#en-interests">Interests</a>
+          </div>
+        </nav>
+      </div>
+    </aside>
+
+    <div class="content-col">
+      <header class="container" id="top">
+        <div class="hero">
+          <div class="hero-top">
+            <div class="hero-intro">
+              <div class="hero-title-row">
+                <h1>黄月辉</h1>
+                <div class="lang-toggle" role="group" aria-label="Language Switcher">
+                  <button type="button" class="lang-btn" data-set-lang="zh" aria-pressed="true">中文</button>
+                  <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="false">EN</button>
+                </div>
+              </div>
+              <p class="title-sub lang-zh">上海交通大学外国语学院 日语专业本科 | 数字文化传播与语言智能研究</p>
+              <p class="title-sub lang-en">B.A. in Japanese, SJTU | Digital Culture Communication and Language Intelligence Research</p>
+            </div>
+            <img class="hero-photo" src="profile.jpg" alt="黄月辉个人照片 / Portrait of Yuehui Huang" />
+          </div>
+
+          <div class="quick-meta inline-lang">
+            <div class="lang-zh">
+              <span class="chip">中共预备党员</span>
+              <span class="chip">GPA 3.9</span>
+              <span class="chip">专业排名 4</span>
+            </div>
+            <div class="lang-en">
+              <span class="chip">Probationary CPC Member</span>
+              <span class="chip">GPA 3.9</span>
+              <span class="chip">Major Rank: 4</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="container">
+    <section id="zh-profile" class="lang-zh">
+      <h2>基本信息</h2>
+      <div class="contact-row">
+        <span>电话：15083832786</span>
+        <span>邮箱：2523649189@qq.com</span>
+      </div>
+      <p>上海交通大学外国语学院日语专业本科生，GPA 3.9，专业排名第 4。研究兴趣集中于数字文化传播、游戏研究与自然语言处理，关注中国文化产品在海外语境中的认知、接受与再诠释机制。</p>
+      <p>具备较强的数据驱动研究能力，能够独立完成跨平台数据采集、语料清洗、文本分析、可视化呈现与结论提炼。熟悉 Python 文本处理流程与跨文化内容分析方法，已在多项研究和竞赛项目中形成可复用的方法框架。</p>
+      <p>在团队协作方面，兼具组织执行与沟通表达能力，曾担任国际交流项目主持与学生代表，能够在多元团队中推动任务落地。希望在内容策略、用户研究、国际传播与文化科技交叉方向持续深耕。</p>
+    </section>
+
+    <section id="en-profile" class="lang-en">
+      <h2>Profile</h2>
+      <div class="contact-row">
+        <span>Phone: 15083832786</span>
+        <span>Email: 2523649189@qq.com</span>
+      </div>
+      <p>I am an undergraduate majoring in Japanese at the School of Foreign Languages, Shanghai Jiao Tong University, with a GPA of 3.9 and major rank of 4. My academic focus lies in digital culture communication, game studies, and NLP-driven discourse analysis.</p>
+      <p>I am able to independently deliver an end-to-end research workflow, including multi-platform data collection, corpus cleaning, text mining, visualization, and insight reporting. I have built practical experience through cross-cultural media studies and user reception research projects.</p>
+      <p>I also bring strong collaboration and communication skills from leadership roles in international exchange programs. I am especially interested in opportunities at the intersection of content strategy, user insight, and global communication.</p>
+    </section>
+
+    <section id="zh-education" class="lang-zh">
+      <h2>教育背景</h2>
+      <div class="edu-grid">
+        <div class="edu-box">
+          <p><strong>上海交通大学</strong> | 外国语学院 日语专业 本科（2024.06 - 至今）</p>
+        </div>
+        <div class="edu-box">
+          <p><strong>荣誉奖项</strong><br />本科生优秀奖学金、日语系学业奖学金</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="en-education" class="lang-en">
+      <h2>Education</h2>
+      <div class="edu-grid">
+        <div class="edu-box">
+          <p><strong>Shanghai Jiao Tong University</strong> | School of Foreign Languages, B.A. in Japanese (Jun 2024 - Present)</p>
+        </div>
+        <div class="edu-box">
+          <p><strong>Awards</strong><br />SJTU Undergraduate Excellence Scholarship; Academic Scholarship of Japanese Department</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="zh-projects" class="lang-zh">
+      <h2>项目经历与能力</h2>
+      <div class="timeline">
+        <article class="timeline-item">
+          <div class="item-head">
+            <h3 class="item-title">人工智能时代下中国形象的传播与再创造（大学生创新实践计划 市级）</h3>
+            <span class="item-time">2024.10 - 至今</span>
+          </div>
+          <p class="item-role">能力方向：数据获取及分析、用户洞察、跨文化研究</p>
+          <ul class="item-points">
+            <li>围绕《黑神话：悟空》进行海外传播与接受机制研究，爬取 YouTube、Reddit、Steam、Metacritic 等近 30 个平台，构建约 325 万字英文语料库。</li>
+            <li>使用 Python 完成文本清洗、分词、词频统计与分层建模，建立“泛玩家-专业玩家”双层语料体系并开展对比分析。</li>
+            <li>提出“玩法转译、类比锚定、分层呈现”传播优化路径，并形成论文《跨文化语境中的中国形象建构：接受美学与计量语言学视角下的〈黑神话：悟空〉研究》。</li>
+          </ul>
+        </article>
+
+        <article class="timeline-item">
+          <div class="item-head">
+            <h3 class="item-title">笹川杯日本研究论文大赛参赛项目（文化组优秀奖）</h3>
+            <span class="item-time">2025.06 - 2025.08</span>
+          </div>
+          <p class="item-role">能力方向：数据收集整理、议题分类、可视化表达</p>
+          <ul class="item-points">
+            <li>聚焦后疫情时代日本主流媒体涉华报道倾向，以朝日新闻网络版为样本构建结构化数据集。</li>
+            <li>基于 Python 实现爬取、清洗、筛选和议题分类；输出箱线图等统计可视化并使用 Adobe Illustrator 进行信息设计优化。</li>
+            <li>通过标准化处理提升数据稳定性与可比性，增强研究结论的可读性与对外传播效果。</li>
+          </ul>
+        </article>
+
+        <article class="timeline-item">
+          <div class="item-head">
+            <h3 class="item-title">第四届中日青年精英营（主持人 / 中方学生代表）</h3>
+            <span class="item-time">2025.09</span>
+          </div>
+          <p class="item-role">能力方向：领导组织、跨文化协作、公共表达</p>
+          <ul class="item-points">
+            <li>参与上交、东大、东京科学大、名古屋大、大阪大联合交流，担任闭营主持，负责流程衔接与互动引导。</li>
+            <li>围绕交换留学、外语学习与青年协作议题开展中日代表交流，促进跨文化沟通与合作。</li>
+            <li>接受“中日新视界”媒体采访，进行项目经验分享。</li>
+          </ul>
+        </article>
+
+        <article class="timeline-item">
+          <div class="item-head">
+            <h3 class="item-title">“筑梦扬帆”日本大阪实践项目（文案编辑）</h3>
+            <span class="item-time">2025.08 - 2025.09</span>
+          </div>
+          <p class="item-role">能力方向：企业调研、信息整合、内容生产</p>
+          <ul class="item-points">
+            <li>赴大阪参与企业与高校访问，涵盖驻大阪总领馆、大金公司、大阪大学石黑浩实验室等单位。</li>
+            <li>围绕人工智能伦理、企业社会责任与国际人才培养等主题参与讲座和访谈。</li>
+            <li>负责撰写项目总结推文并发布于“全球交大”官方公众号，完成成果传播转化。</li>
+          </ul>
+        </article>
+
+        <article class="timeline-item">
+          <div class="item-head">
+            <h3 class="item-title">校园活动策划与志愿服务</h3>
+            <span class="item-time">2024 - 至今</span>
+          </div>
+          <p class="item-role">能力方向：创意策划、执行统筹、现场协同</p>
+          <ul class="item-points">
+            <li>参与中国国际大学生创新大赛、水灯节、校庆、日语演讲比赛等多项活动志愿与策划。</li>
+            <li>策划“跨文化知识挑战”主题摊位，设计英文字谜、日语俳句、欧洲民俗问答等互动环节，吸引百余名师生参与。</li>
+            <li>负责流程统筹、物料采购与志愿者培训，实现现场衔接顺畅并带动留学生主动参与。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="en-projects" class="lang-en">
+      <h2>Projects and Experience</h2>
+      <div class="timeline">
+        <article class="timeline-item">
+          <div class="item-head">
+            <h3 class="item-title">Reconstruction and Communication of China's Image in the AI Era (Municipal Undergraduate Innovation Project)</h3>
+            <span class="item-time">Oct 2024 - Present</span>
+          </div>
+          <p class="item-role">Focus: Data collection and analysis, user insight, cross-cultural research</p>
+          <ul class="item-points">
+            <li>Studied global communication and reception of <em>Black Myth: Wukong</em>; collected comments from nearly 30 platforms including YouTube, Reddit, Steam, and Metacritic.</li>
+            <li>Built an English corpus of around 3.25 million words and implemented cleaning, tokenization, frequency analysis, and layered corpus modeling with Python.</li>
+            <li>Proposed actionable communication strategies and produced the paper on Chinese image construction in cross-cultural contexts from reception aesthetics and quantitative linguistics perspectives.</li>
+          </ul>
+        </article>
+
+        <article class="timeline-item">
+          <div class="item-head">
+            <h3 class="item-title">Sasakawa Cup Japanese Studies Paper Competition (Outstanding Award, Culture Track)</h3>
+            <span class="item-time">Jun 2025 - Aug 2025</span>
+          </div>
+          <p class="item-role">Focus: Data preparation, topic categorization, visualization</p>
+          <ul class="item-points">
+            <li>Investigated China-related reporting trends in mainstream Japanese media in the post-pandemic era, with Asahi Shimbun Digital as the primary sample source.</li>
+            <li>Completed web scraping, cleaning, filtering, and topic coding with Python; delivered boxplots and other statistical visualizations.</li>
+            <li>Designed and refined infographics using Adobe Illustrator to improve clarity and communication of insights.</li>
+          </ul>
+        </article>
+
+        <article class="timeline-item">
+          <div class="item-head">
+            <h3 class="item-title">4th China-Japan Youth Elite Camp (Host and Chinese Student Representative)</h3>
+            <span class="item-time">Sep 2025</span>
+          </div>
+          <p class="item-role">Focus: Leadership, cross-cultural collaboration, public speaking</p>
+          <ul class="item-points">
+            <li>Participated in joint exchange with SJTU, University of Tokyo, Institute of Science Tokyo, Nagoya University, and Osaka University.</li>
+            <li>Hosted the closing ceremony, managed transitions and live engagement, and facilitated student interaction.</li>
+            <li>Joined media interview on Sino-Japanese youth exchange and shared practical experience from the program.</li>
+          </ul>
+        </article>
+
+        <article class="timeline-item">
+          <div class="item-head">
+            <h3 class="item-title">"Dream Sailing" Osaka Practice Program (Content Editor)</h3>
+            <span class="item-time">Aug 2025 - Sep 2025</span>
+          </div>
+          <p class="item-role">Focus: Enterprise research, information synthesis, content production</p>
+          <ul class="item-points">
+            <li>Visited institutions including the Chinese Consulate General in Osaka, Daikin, and Hiroshi Ishiguro Lab at Osaka University.</li>
+            <li>Discussed AI ethics, CSR, and global talent cultivation through seminars and roundtable exchanges.</li>
+            <li>Wrote the official project summary article published on the "Global SJTU" public account.</li>
+          </ul>
+        </article>
+
+        <article class="timeline-item">
+          <div class="item-head">
+            <h3 class="item-title">Campus Event Planning and Volunteering</h3>
+            <span class="item-time">2024 - Present</span>
+          </div>
+          <p class="item-role">Focus: Creative planning, execution, on-site coordination</p>
+          <ul class="item-points">
+            <li>Served in multiple events such as innovation contests, lantern festivals, university anniversary events, and Japanese speech competitions.</li>
+            <li>Designed a cross-cultural challenge booth featuring English puzzles, Japanese haiku improvisation, and European folklore quizzes.</li>
+            <li>Coordinated materials, volunteer training, and on-site process control to ensure smooth delivery and strong participation.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="zh-skills" class="lang-zh">
+      <h2>技能与信息</h2>
+      <p><strong>语言能力：</strong>日语 JLPT N2（175/180）；英语 CET-4、CET-6（均 600+）。</p>
+      <p><strong>数据与研究：</strong>Python（pandas、NLTK、jieba）、SPSS（描述统计/相关/回归/信度）、Gephi、语料清洗与可视化分析。</p>
+      <p><strong>软件工具：</strong>Word、PPT、Excel（数据透视表、VLOOKUP）、剪映、PS、Anaconda、Adobe Illustrator（图表与信息设计）。</p>
+      <div class="tag-wrap">
+        <span class="tag">数据采集</span>
+        <span class="tag">文本挖掘</span>
+        <span class="tag">跨文化研究</span>
+        <span class="tag">用户洞察</span>
+        <span class="tag">内容策划</span>
+        <span class="tag">公共表达</span>
+      </div>
+    </section>
+
+    <section id="en-skills" class="lang-en">
+      <h2>Skills</h2>
+      <p><strong>Languages:</strong> Japanese JLPT N2 (175/180); English CET-4 and CET-6 (both 600+).</p>
+      <p><strong>Data and Research:</strong> Python (pandas, NLTK, jieba), SPSS (descriptive statistics, correlation, regression, reliability), Gephi, corpus cleaning and visualization.</p>
+      <p><strong>Software:</strong> Word, PowerPoint, Excel (pivot tables, VLOOKUP), Jianying, Photoshop, Anaconda, Adobe Illustrator.</p>
+      <div class="tag-wrap">
+        <span class="tag">Data Collection</span>
+        <span class="tag">Text Mining</span>
+        <span class="tag">Cross-cultural Research</span>
+        <span class="tag">User Insight</span>
+        <span class="tag">Content Planning</span>
+        <span class="tag">Public Speaking</span>
+      </div>
+    </section>
+
+    <section id="zh-interests" class="lang-zh">
+      <h2>兴趣与拓展</h2>
+      <p>长期深度参与游戏文化、二次元内容与社交平台生态，持续跟踪青年用户兴趣迁移、社区话语演化与热点扩散路径。相关兴趣不仅停留在“体验层面”，也延伸到内容分析、用户行为观察与文化传播理解。</p>
+      <details>
+        <summary>游戏研究与体验（展开查看）</summary>
+        <p>对《杀戮尖塔》进行系统化拆解，重点分析卡牌构筑、战斗反馈、关卡循环与高重复游玩的驱动机制。长期体验并横向比较多类型作品，包括类银河恶魔城、肉鸽、PZL、模拟经营、叙事/RPG 与竞技手游等，代表作品覆盖《Animal Well》《死亡细胞》《哈迪斯》《小丑牌》《星露谷物语》《王者荣耀》《原神》《星穹铁道》等。兼顾“玩家体验”与“研究视角”，持续关注玩家社区反馈、版本更新和赛事生态变化。</p>
+      </details>
+      <details>
+        <summary>二次元与流行文化（展开查看）</summary>
+        <p>上交动漫社成员，连续两年参与 BW，长期活跃于二次元社群。持续追踪动画、漫画、轻小说及 J-pop 内容生态，对不同圈层叙事风格、角色文化与粉丝话语体系有较深理解；同时关注内容从作品层面到社区层面的二次传播路径，能够快速把握圈层热点与讨论焦点。</p>
+      </details>
+      <details>
+        <summary>社媒与内容生态观察（展开查看）</summary>
+        <p>持续高频使用 B 站、抖音、小红书、知乎、米游社、X 等平台，日常关注内容分发机制、平台语境差异与用户互动方式。具备对梗文化演化、社区共识形成、话题冷启动与扩散节奏的动态观察能力，能够从平台侧现象反推用户心理与内容策略机会点。</p>
+      </details>
+    </section>
+
+    <section id="en-interests" class="lang-en">
+      <h2>Interests and Extended Profile</h2>
+      <p>I actively engage in game culture, ACG communities, and social media ecosystems. My interests are practice-oriented but also analytical, with sustained observation of youth preferences, meme evolution, and how online discourse spreads across platforms.</p>
+      <details>
+        <summary>Game Analysis and Practice</summary>
+        <p>I conducted structured analysis of <em>Slay the Spire</em> (deck building, combat feedback, loop design, and retention logic), and I continuously compare player experience across multiple genres, including roguelike, metroidvania, puzzle, simulation, narrative RPG, and competitive mobile games. This helps me connect game mechanics with user motivation and long-term engagement patterns.</p>
+      </details>
+      <details>
+        <summary>ACG and Pop Culture</summary>
+        <p>As a member of the SJTU anime club, I have participated in major conventions and remained active in ACG communities. I closely follow anime, manga, light novels, and J-pop ecosystems, and I pay attention to how fandom discourse, character narratives, and community participation shape content influence.</p>
+      </details>
+      <details>
+        <summary>Social Media Observation</summary>
+        <p>I am a heavy user of Bilibili, Douyin, Xiaohongshu, Zhihu, MiHoYo community platforms, and X. I maintain long-term observation of recommendation logic, platform-specific communication styles, and user behavior shifts, and I can quickly identify emerging topics and actionable content opportunities.</p>
+      </details>
+    </section>
+      </main>
+
+      <footer class="container">
+        <p class="lang-zh">© 2026 黄月辉 | 个人简历主页</p>
+        <p class="lang-en">© 2026 Yuehui Huang | Personal Resume Site</p>
+        <p class="lang-zh"><a href="#top" style="color: inherit;">返回顶部</a></p>
+        <p class="lang-en"><a href="#top" style="color: inherit;">Back to Top</a></p>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var buttons = document.querySelectorAll(".lang-btn");
+      var defaultLang = "zh";
+      var saved = localStorage.getItem("resume_lang");
+
+      function setLang(lang) {
+        document.body.setAttribute("data-lang", lang);
+        document.documentElement.setAttribute("lang", lang === "zh" ? "zh-CN" : "en");
+        buttons.forEach(function (btn) {
+          btn.setAttribute("aria-pressed", String(btn.getAttribute("data-set-lang") === lang));
+        });
+        localStorage.setItem("resume_lang", lang);
+      }
+
+      buttons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          setLang(btn.getAttribute("data-set-lang"));
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      });
+
+      setLang(saved === "en" ? "en" : defaultLang);
+    })();
+  </script>
+</body>
+</html>
